@@ -144,23 +144,30 @@ if __name__ == '__main__':
     print("5. See inventory of vehicles available")
     print("6. Add inventory")
     print("7. Vehicle Return")
-    choice = int(input("please enter your choice: "))
-    if choice == 1:
-        c = Customer(customer_name=input('Please Enter Customer Name: '), mobile_number=int(input('Please Enter '
-                                                                                                  'Mobile Number: '
-                                                                                                  '')),
-                     emaail=input('Please Enter Customer E-mail: '))
-        c.customer_list()
-    elif choice == 5:
-        show_inventory_list()
-    elif choice == 6:
-        v = Vehicles(v_type=input('Please Enter Vehicle Type: '))
-        v.inventory_list()
-    elif choice == 3:
-        show_customer_list()
-    elif choice == 2:
-        booking_rentals()
-    elif choice == 4:
-        show_booking_list()
-    elif choice == 7:
-        vehicle_return()
+
+    def call():
+        choice = int(input("please enter your choice: "))
+        if choice == 1:
+            c = Customer(customer_name=input('Please Enter Customer Name: '), mobile_number=int(input('Please Enter '
+                                                                                                      'Mobile Number: '
+                                                                                                      '')),
+                         emaail=input('Please Enter Customer E-mail: '))
+            c.customer_list()
+        elif choice == 5:
+            show_inventory_list()
+        elif choice == 6:
+            v = Vehicles(v_type=input('Please Enter Vehicle Type: '))
+            v.inventory_list()
+        elif choice == 3:
+            show_customer_list()
+        elif choice == 2:
+            booking_rentals()
+        elif choice == 4:
+            show_booking_list()
+        elif choice == 7:
+            vehicle_return()
+        else:
+            print('Please Enter Valid Input:')
+            call()
+
+    call()
