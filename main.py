@@ -1,5 +1,4 @@
 import uuid
-import csv
 from csv import *
 from datetime import datetime
 
@@ -93,11 +92,11 @@ def booking_rentals():
         c_l_l = [ele for ele in list_of_row if ele != []]
     customer_wants_to_book = input("please enter what you want to book"
                                    "'car', bike, boat: ")
-    customer_id = str(input("please enter customer_id: "))
     booked_customer_list = []
     if len(l_l) > 0:
         for i in range(len(l_l)):
             if l_l[i][1] == customer_wants_to_book:
+                customer_id = str(input("please enter customer_id: "))
                 booked_vehicles = l_l[i]
                 l_l.remove(l_l[i])
                 for j in range(len(c_l_l)):
@@ -130,44 +129,55 @@ def booking_rentals():
                         print('Customer Not Added to Databse')
             else:
                 print('Vehicle Not Available for Booking! Sorry for inconvenience')
+                break
     else:
         print('No Vehicle Available for Booking')
 
 
+def create_customer():
+    c = Customer(customer_name=input('Please Enter Customer Name: '), mobile_number=int(input('Please Enter '
+                                                                                              'Mobile Number: '
+                                                                                              '')),
+                 emaail=input('Please Enter Customer E-mail: '))
+    c.customer_list()
+
+
+def create_vehicle():
+    v = Vehicles(v_type=input('Please Enter Vehicle Type: '))
+    v.inventory_list()
+
+
+def terminate():
+    print('Bye bye')
+
+
 if __name__ == '__main__':
-    dict = {}
-    print('----------welcome-----------')
-    print("1. Add Customer")
-    print("2. Add Rental Booking")
-    print("3. See customer list")
-    print("4. See rental booking list")
-    print("5. See inventory of vehicles available")
-    print("6. Add inventory")
-    print("7. Vehicle Return")
 
-    def call():
-        choice = int(input("please enter your choice: "))
-        if choice == 1:
-            c = Customer(customer_name=input('Please Enter Customer Name: '), mobile_number=int(input('Please Enter '
-                                                                                                      'Mobile Number: '
-                                                                                                      '')),
-                         emaail=input('Please Enter Customer E-mail: '))
-            c.customer_list()
-        elif choice == 5:
-            show_inventory_list()
-        elif choice == 6:
-            v = Vehicles(v_type=input('Please Enter Vehicle Type: '))
-            v.inventory_list()
-        elif choice == 3:
-            show_customer_list()
-        elif choice == 2:
-            booking_rentals()
-        elif choice == 4:
-            show_booking_list()
-        elif choice == 7:
-            vehicle_return()
-        else:
-            print('Please Enter Valid Input:')
-            call()
-
-    call()
+    choice = 0
+    options = {
+        0: print(),
+        1: create_customer,
+        2: booking_rentals,
+        3: show_customer_list,
+        4: show_booking_list,
+        5: show_inventory_list,
+        6: create_vehicle,
+        7: vehicle_return,
+        8: terminate
+    }
+   
+    print('----------Welcome-----------')
+    while choice != 8:
+        print("1. Add Customer")
+        print("2. Add Rental Booking")
+        print("3. See customer list")
+        print("4. See rental booking list")
+        print("5. See inventory of vehicles available")
+        print("6. Add inventory")
+        print("7. Vehicle Return")
+        print("8. Exit")
+        try:
+            choice = int(input("Please enter your choice: "))
+            options[choice]()
+        except KeyError as ke:
+            print('Please Enter Valid Input!!')
